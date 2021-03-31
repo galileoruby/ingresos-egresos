@@ -3,6 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
+//ngRx
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducers } from './app.reducer';
+
 
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +32,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 
 
- 
+
 
 // 2. Add your credentials from step 1
 
@@ -52,7 +57,13 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
-    AngularFireStorageModule // storage
+    AngularFireStorageModule, // storage
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // retains las 25 movements,
+      logOnly: environment.production // restrict extensions to log-only mode
+    })
+
   ],
   providers: [],
   bootstrap: [AppComponent]
