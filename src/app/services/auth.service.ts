@@ -12,12 +12,15 @@ import { AppState } from '../app.reducer';
 import { Usuario } from '../models/usuario.models';
 import * as authAction from '../auth/auth.action';
 
+import * as ingresoEgresoAction from '../ingreso-egreso/ingreso-egreso.actions';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   userSubscription: Subscription;
+  private _user: Usuario;
 
 
   constructor(public authFire: AngularFireAuth,
@@ -28,6 +31,10 @@ export class AuthService {
   }
 
 
+  get User(): Usuario {
+    return this._user;
+  }
+
   initAuthListener() {
     this.authFire.authState.subscribe(fuser => {
 
@@ -35,6 +42,7 @@ export class AuthService {
         this.userSubscription = this.firestore.doc(`/${fuser.uid}/usuario`).valueChanges()
           .subscribe((firestoreUser: any) => {
             const user = Usuario.fromFirebase(firestoreUser);
+            this._user = user;
 
             this.store.dispatch(authAction.setUser({ user }));
 
@@ -42,9 +50,11 @@ export class AuthService {
 
       } else {
         if (this.userSubscription) {
+          this._user = null;
           this.userSubscription.unsubscribe();
         }
         this.store.dispatch(authAction.unSetUser());
+        this.store.dispatch(ingresoEgresoAction.unSetItems());
       }
     });
   }
@@ -74,9 +84,6 @@ export class AuthService {
 
 
   cerrarSesion() {
-
-    console.log('auth.service.cerrarSesion');
-
     return this.authFire.auth.signOut();
   }
 
