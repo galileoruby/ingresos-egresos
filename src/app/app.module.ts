@@ -9,20 +9,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducers } from './app.reducer';
 
 
+ 
+import { AppComponent } from './app.component'; 
 
-import { ReactiveFormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts';
-
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { IngresoEgresoComponent } from './ingreso-egreso/ingreso-egreso.component';
-import { EstadisticaComponent } from './ingreso-egreso/estadistica/estadistica.component';
-import { DetalleComponent } from './ingreso-egreso/detalle/detalle.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 
 //Firebase module
@@ -31,7 +20,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
-import { OrdenIngresoPipe } from './pipes/orden-ingreso.pipe';
+import { AuthModule } from './auth/auth.module';
+
+// import { IngresoEgresoModule } from './ingreso-egreso/ingreso-egreso.module';
 
 
 
@@ -41,26 +32,19 @@ import { OrdenIngresoPipe } from './pipes/orden-ingreso.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    IngresoEgresoComponent,
-    EstadisticaComponent,
-    DetalleComponent,
-    FooterComponent,
-    NavbarComponent,
-    SidebarComponent,
-    OrdenIngresoPipe
+    AppComponent,     
+    
   ],
   imports: [
     BrowserModule,
+    AuthModule,     
+    
     AppRoutingModule,
-    ReactiveFormsModule,
+    
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
-    ChartsModule,
+    
     AngularFireStorageModule, // storage
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({

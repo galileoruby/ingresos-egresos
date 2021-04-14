@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         filter(auth => auth.user != null)
       ).subscribe(fUser => {
         this.currentUser = fUser.user;
-        console.log(this.currentUser);
+
       });
 
 

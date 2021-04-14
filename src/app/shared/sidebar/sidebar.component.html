@@ -10,7 +10,7 @@
 
                     <div class="text-wrapper">
                         <p *ngIf="currentUser" class="profile-name">{{currentUser.email}}</p>
-                        <div>
+                        <div *ngIf="currentUser">
                             <small class="designation text-muted">{{currentUser.nombre}}</small>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
         </li>
 
         <li class="nav-item">
-            <a (click)="logOut()"  class="nav-link cursor">
+            <a (click)="logOut()" class="nav-link cursor">
                 <i class="menu-icon fa fa-sign-out-alt"></i>
                 <span class="menu-title">Cerrar sesión</span>
             </a>
